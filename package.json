@@ -1,0 +1,23 @@
+{
+  "name": "theebot",
+  "version": "1.0.0",
+  "description": "A fun discord bot with some useful commands.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheeJoshhh/TheeBot.git"
+  },
+  "author": "Joshua Billing (TheeJoshhh)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheeJoshhh/TheeBot/issues"
+  },
+  "homepage": "https://github.com/TheeJoshhh/TheeBot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "ms": "^2.1.3"
+  }
+}
