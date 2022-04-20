@@ -18,6 +18,7 @@
   "homepage": "https://github.com/TheeJoshhh/TheeBot#readme",
   "dependencies": {
     "discord.js": "^13.6.0",
+    "mongoose": "^6.3.0",
     "ms": "^2.1.3"
   }
 }
