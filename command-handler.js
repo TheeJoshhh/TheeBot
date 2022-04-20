@@ -18,6 +18,7 @@ module.exports = (client) => {
         commands[commandInfo.name] = commandFile;
         console.log(`Loaded ${commandInfo.name}.`);
 
+        // The fields that will be sent to discord to create the slash commands.
         cmdFields = {
             name: commandInfo.name,
             description: commandInfo.description,
@@ -39,11 +40,13 @@ module.exports = (client) => {
 
     // When the bot receives an interaction.
     client.on('interactionCreate', async (interaction) => {
-        // Handle commands and buttons.
+        // Handle commands, buttons and interactions.
         if (interaction.isCommand() || interaction.isButton() || interaction.isSelectMenu()) {
+            // Determins the name of the original command.
             let commandName = interaction.isCommand() ? interaction.commandName : interaction.message.interaction.commandName;
+            // Find and run the command (if it exists).
             if (!commands[commandName]) return console.log(`Missing Command: ${commandName}!!`);
-            commands[commandName].run(client, interaction); // Run the command.
+            commands[commandName].run(client, interaction);
         }
     });
 }
