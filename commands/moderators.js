@@ -3,6 +3,7 @@ const Moderators = require('../schemas/moderator.js');
 const { MessageEmbed } = require('discord.js');
 const { color_theme } = require('../config.json');
 const { version } = require('../package.json');
+const { checkMod } = require('../utils');
 
 module.exports = {
 
@@ -39,6 +40,8 @@ module.exports = {
     ,
 
     run: async function (client, interaction) {
+        if (!checkMod(interaction.member)) return interaction.reply("Only moderators can use this command!");
+
         // HANDLE COMMANDS.
         if (interaction.isCommand()) {
             // Destructure some properties for easy access.
