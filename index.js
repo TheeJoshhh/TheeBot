@@ -10,6 +10,7 @@ const {
     development_mongo_uri 
 } = require('./config.json');
 const command_handler = require('./command-handler');
+const Guilds = require('./schemas/guild');
 
 
 
@@ -17,7 +18,8 @@ const command_handler = require('./command-handler');
 const client = new Discord.Client({
     intents: [
         Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MEMBERS
     ]
 });
 
@@ -32,6 +34,15 @@ client.on('ready', async () => {
     command_handler(client);
     console.log(`${client.user.username} is now online and ready to receive commands!`);
 });
+
+client.on('guildMemberAdd', async (member) => {
+    const { guild } = member;
+    const guild_data = await Guilds.findById(guild.id);
+    if (!guild_data) return;
+    const welcome_channel = guild.channels.cache.get(guild_data.welcome_message.channel_id);
+    if (!welcome_channel) return;
+    welcome_channel.send(guild_data.welcome_message.message.replace('${member}', member));
+})
 
 // Login to the bot account.
 client.login(production_mode ? production_token : development_token);
