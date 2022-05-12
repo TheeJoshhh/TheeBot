@@ -17,8 +17,7 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { getVoiceConnection } = require('@discordjs/voice');
-const play = require('play-dl');
-const { MusicPlayer, Song, musicData } = require('../voice-handler');
+const { MusicPlayer, musicData } = require('../voice-handler');
 
 module.exports = {
 
@@ -36,7 +35,7 @@ module.exports = {
     run: async function (client, interaction) {
         // HANDLE COMMANDS.
         if (interaction.isCommand()) {
-            // The search query.
+            // The supplied guild ID.
             const serverId = interaction.options.getString('server');
 
             // Make sure the user is in a voice channel.
@@ -96,10 +95,9 @@ module.exports = {
             }
 
             GuildPlayer.controller = serverId;
-            getVoiceConnection(interaction.guild.id).subscribe(OtherGuildPlayer.player);
+            GuildPlayer.subscription = getVoiceConnection(interaction.guild.id).subscribe(OtherGuildPlayer.player);
             interaction.reply('You\'re now listening along!');
             return;
-            
         }
     }
 }

@@ -18,7 +18,6 @@
 // Import required modules.
 const Discord = require('discord.js');
 const play = require('play-dl');
-const { video_basic_info, yt_validate } = require('play-dl');
 const { 
     joinVoiceChannel, 
     getVoiceConnection,
@@ -28,7 +27,6 @@ const {
     createAudioPlayer,
     NoSubscriberBehavior,
     AudioPlayerStatus,
-    AudioPlayerIdleState
 } = require('@discordjs/voice');
 
 const musicData = new Discord.Collection();
@@ -50,7 +48,8 @@ class MusicPlayer {
         this.loop = false; // If songs go back to the end of the queue after playing.
         this.voiceId = null; // The ID of the connected voice channel.
         this.player = null; // The discord player object.
-        this.controller = null; // Null or the ID of the guild .
+        this.controller = null; // Null or the ID of the guild.
+        this.subscription = null;
 
         // Automatically store the music data to a collection for easy access.
         musicData.set(this.id, this);
