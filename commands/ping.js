@@ -27,10 +27,7 @@ module.exports = {
     run: function (client, interaction) {
         // HANDLE COMMANDS.
         if (interaction.isCommand()) {
-            interaction.reply({
-                content: 'Pong!!',
-                ephemeral: true
-            });
+            interaction.reply('Pong!!');
         }
     }
 }
