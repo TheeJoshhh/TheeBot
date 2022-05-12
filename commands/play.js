@@ -18,7 +18,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { getVoiceConnection } = require('@discordjs/voice');
 const play = require('play-dl');
-const guild = require('../schemas/guild');
 const { MusicPlayer, Song, musicData } = require('../voice-handler');
 
 module.exports = {

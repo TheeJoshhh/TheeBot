@@ -17,7 +17,6 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { musicData } = require('../voice-handler');
-const { getVoiceConnection } = require('@discordjs/voice');
 
 module.exports = {
 
@@ -44,6 +43,13 @@ module.exports = {
                     content: 'You must be in my voice channel to use that command!',
                     ephemeral: true
                 });
+                return;
+            }
+
+            // If the user is the one that queued the song, let them skip it.
+            if (GuildPlayer.queue[0].queuedBy.id == interaction.member.id) {
+                interaction.reply('Skipping...');
+                GuildPlayer.next();
                 return;
             }
             
