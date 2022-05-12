@@ -59,20 +59,14 @@ module.exports = {
                     GuildPlayer.connect(interaction.member.voice.channel);
                 } catch (e) {
                     console.error(e);
-                    interaction.editReply({
-                        content: 'An error occured while joining your channel. Please try again later.',
-                        ephemeral: true
-                    });
+                    interaction.editReply('An error occured while joining your channel. Please try again later.');
                     return;
                 }
             }
 
             // If the MusicPlayer is linked to another guild.
             if (GuildPlayer.controller) {
-                interaction.editReply({
-                    content: `The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`,
-                    ephemeral: true
-                });
+                interaction.editReply(`The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`);
                 return;
             }
 
@@ -101,7 +95,7 @@ module.exports = {
                         length: info.video_details.durationInSec
                     }
                 } catch (error) {
-                    if (error.message.includes("Sign in to confirm your age")) {
+                    if (error.message.includes('Sign in to confirm your age')) {
                         interaction.editReply('Sorry, youtube doesn\'t let me play age restricted videos.');
                         return;
                     } 
@@ -114,18 +108,12 @@ module.exports = {
                     length: info[0].durationInSec
                 }
             } else {
-                interaction.editReply({
-                    content: 'Sorry, that type of link isn\'t supported yet',
-                    ephemeral: true
-                });
+                interaction.editReply('Sorry, that type of link isn\'t supported yet');
                 return;
             }
 
             if (!songInfo) { // If the song variable hasn't been changed.
-                interaction.editReply({
-                    content: 'There was an error finding your song.',
-                    ephemeral: true
-                });
+                interaction.editReply('There was an error finding your song.');
                 return;
             }
 
