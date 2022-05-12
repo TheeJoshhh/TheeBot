@@ -1,6 +1,6 @@
 {
   "name": "theebot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fun discord bot with some useful commands.",
   "main": "index.js",
   "scripts": {
