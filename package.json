@@ -11,7 +11,7 @@
     "url": "git+https://github.com/TheeJoshhh/TheeBot.git"
   },
   "author": "Joshua Billing (TheeJoshhh)",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/TheeJoshhh/TheeBot/issues"
   },
