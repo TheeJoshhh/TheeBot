@@ -37,6 +37,13 @@ module.exports = {
                 });
                 return;
             }
+
+            // If the MusicPlayer is linked to another guild.
+            if (GuildPlayer.controller) {
+                interaction.editReply(`The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`);
+                return;
+            }
+
             // If the member isn't in the bots voice channel.
             if (!voiceChannel || voiceChannel.members.has(client.user.id) == false) {
                 interaction.reply({

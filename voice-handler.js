@@ -153,12 +153,8 @@ class MusicPlayer {
         // If repeat is off, shift the queue.
         if (!this.repeat) this.queue.shift();
         
-        // If there are no more songs in queue, destroy the player.
-        if (this.queue.length < 1) {
-            if (this.player) this.player.stop();
-            this.player = null;
-            return;
-        }
+        // If there are no more songs in queue, return.
+        if (this.queue.length < 1) return;
         try {
             const resource = await this.queue[0].getResource();
             this.player.play(resource);
