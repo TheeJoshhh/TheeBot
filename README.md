@@ -18,4 +18,4 @@ Copyright (C) 2022 Joshua Billing / TheeJoshhh
 >You should have received a copy of the GNU General Public License
 >along with TheeBot.  If not, see <https://www.gnu.org/licenses/>.
 
-[You can find the full license here](../blob/master/LICENSE)
+[You can find the full license here](../main/LICENSE)
