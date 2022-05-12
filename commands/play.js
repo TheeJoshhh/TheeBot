@@ -125,7 +125,7 @@ module.exports = {
                     length: info[0].durationInSec
                 }
             } else {
-                interaction.editReply('Sorry, that type of link isn\'t supported yet');
+                interaction.editReply('Sorry, that type of link isn\'t supported yet!');
                 return;
             }
 
