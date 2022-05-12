@@ -40,7 +40,7 @@ module.exports = {
 
             // If the MusicPlayer is linked to another guild.
             if (GuildPlayer.controller) {
-                interaction.editReply(`The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`);
+                interaction.reply(`The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`);
                 return;
             }
 
