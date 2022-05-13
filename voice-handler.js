@@ -47,6 +47,7 @@ class MusicPlayer {
         this.repeat = false; // If the song will keep repeating.
         this.loop = false; // If songs go back to the end of the queue after playing.
         this.voiceId = null; // The ID of the connected voice channel.
+        this.textId = null; // The ID of the text channel to send messages to.
         this.player = null; // The discord player object.
         this.controller = null; // Null or the ID of the guild.
         this.subscription = null;
@@ -162,8 +163,10 @@ class MusicPlayer {
         if (this.queue.length < 1) return;
         try {
             const resource = await this.queue[0].getResource();
+            const channel = client.guilds.cache.get(this.id).channels.cache.get(this.textId);
             this.player.play(resource);
-            return `Now Playing ${this.queue[0].name}`;
+            channel.send(`Now Playing \`${this.queue[0].name}\``);
+            return;
         } catch (e) {
             console.error(e)
             this.next();

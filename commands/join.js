@@ -50,6 +50,7 @@ module.exports = {
             // Create a MusicPlayer and join the user's channel.
             new MusicPlayer(interaction.guild.id);
             const GuildPlayer = musicData.get(interaction.guild.id);
+            GuildPlayer.textId = interaction.channelId;
 
             try {
                 GuildPlayer.connect(interaction.member.voice.channel);

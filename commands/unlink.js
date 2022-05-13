@@ -57,6 +57,7 @@ module.exports = {
             }
 
             const GuildPlayer = musicData.get(interaction.guild.id);
+            GuildPlayer.textId = interaction.channelId;
 
             // If the bot isn't linked to another server.
             if (!GuildPlayer.controller) {

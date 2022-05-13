@@ -48,6 +48,7 @@ module.exports = {
                 });
                 return;
             }
+            GuildPlayer.textId = interaction.channelId;
 
             // If there's no music queued in the guild.
             if (GuildPlayer.queue.length < 1) {

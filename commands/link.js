@@ -61,6 +61,7 @@ module.exports = {
             if (!musicData.has(interaction.guild.id)) new MusicPlayer(interaction.guild.id);
 
             const GuildPlayer = musicData.get(interaction.guild.id);
+            GuildPlayer.textId = interaction.channelId;
 
             // If there isn't one already, create a voice connection.
             if (!getVoiceConnection(interaction.guild.id)) {
