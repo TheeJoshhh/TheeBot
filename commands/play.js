@@ -157,7 +157,7 @@ module.exports = {
                     songData.length ? songData.length : null
                 );
                 
-                if (count == 0) result = await GuildPlayer.play(song);
+                if (count < 1) result = await GuildPlayer.play(song);
                 else await GuildPlayer.play(song);
                 count ++;
             });
