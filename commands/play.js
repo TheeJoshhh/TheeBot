@@ -106,7 +106,7 @@ module.exports = {
                 const playlist = await play.spotify(query) 
                 const tracks = await playlist.all_tracks();
                 tracks.forEach(track => {
-                    songInfo.push({name: `${tack.artists[0].name} - ${track.name}`});
+                    songInfo.push({name: `${track.artists[0].name} - ${track.name}`});
                 });
             } else if (type == 'so_track') { // If the query is a soundcloud url.
                 const info = await play.soundcloud(query);
