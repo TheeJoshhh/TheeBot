@@ -30,7 +30,27 @@ module.exports = {
         if (interaction.isCommand()) {
             const GuildPlayer = musicData.get(interaction.guild.id);
             const voiceChannel = interaction.member.voice.channel;
+
+            // If the member isn't in the bots voice channel.
+            if (!voiceChannel || voiceChannel.members.has(client.user.id) == false) {
+                interaction.reply({
+                    content: 'You must be in my voice channel to use that command!',
+                    ephemeral: true
+                });
+                return;
+            }
+
+            // If there's no MusicPlayer for the guild.
             if (!GuildPlayer) {
+                interaction.reply({
+                    content: 'I\'m not playing music!',
+                    ephemeral: true
+                });
+                return;
+            }
+
+            // If there's no music queued in the guild.
+            if (GuildPlayer.queue.length < 1) {
                 interaction.reply({
                     content: 'I\'m not playing music!',
                     ephemeral: true
@@ -40,14 +60,8 @@ module.exports = {
 
             // If the MusicPlayer is linked to another guild.
             if (GuildPlayer.controller) {
-                interaction.reply(`The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`);
-                return;
-            }
-
-            // If the member isn't in the bots voice channel.
-            if (!voiceChannel || voiceChannel.members.has(client.user.id) == false) {
                 interaction.reply({
-                    content: 'You must be in my voice channel to use that command!',
+                    content: `The music player is currently linked to guild with ID ${GuildPlayer.controller}. Use the command \`unlink\` if you want to unlink the music player.`,
                     ephemeral: true
                 });
                 return;
