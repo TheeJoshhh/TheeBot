@@ -25,7 +25,7 @@ module.exports = {
         .setDescription('Pause the music.')
     ,
 
-    run: function (client, interaction) {
+    run: async function (client, interaction) {
         // HANDLE COMMANDS.
         if (interaction.isCommand()) {
             const GuildPlayer = musicData.get(interaction.guild.id);
@@ -69,7 +69,7 @@ module.exports = {
             }
 
             try {
-                GuildPlayer.pause();
+                await GuildPlayer.pause();
                 interaction.reply('Music Paused.');
             } catch (e) {
                 interaction.reply(e.message);

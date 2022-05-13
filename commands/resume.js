@@ -25,7 +25,7 @@ module.exports = {
         .setDescription('Resume paused music.')
     ,
 
-    run: function (client, interaction) {
+    run: async function (client, interaction) {
         // HANDLE COMMANDS.
         if (interaction.isCommand()) {
             const GuildPlayer = musicData.get(interaction.guild.id);
@@ -69,7 +69,7 @@ module.exports = {
             }
 
             try {
-                GuildPlayer.resume();
+                await GuildPlayer.resume();
                 interaction.reply('Music Resumed.');
             } catch (e) {
                 interaction.reply(e.message);
