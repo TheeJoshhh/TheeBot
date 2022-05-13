@@ -146,9 +146,18 @@ module.exports = {
                 return;
             }
 
-            // Loop through all of the the songs and play/queue them.
-            let count = 0;
             let result = '';
+
+            // Create a song object of the song.
+            const firstSongInfo = songInfo.shift();
+            const firstSong = new Song(
+                firstSongInfo.name, 
+                interaction.member, 
+                firstSongInfo.url ? firstSongInfo.url : null, 
+                firstSongInfo.length ? firstSongInfo.length : null
+            );
+            result = await GuildPlayer.play(firstSong);
+
             songInfo.forEach(async songData => {
                 const song = new Song(
                     songData.name, 
@@ -156,13 +165,10 @@ module.exports = {
                     songData.url ? songData.url : null, 
                     songData.length ? songData.length : null
                 );
-                
-                if (count < 1) result = await GuildPlayer.play(song);
-                else await GuildPlayer.play(song);
-                count ++;
+                await GuildPlayer.play(song);
             });
 
-            if (songInfo.length > 1) result = `Added ${songInfo[0].name} and ${songInfo.length - 1} other songs to the queue.`;
+            if (songInfo.length > 0) result = `Added ${firstSongInfo.name} and ${songInfo.length} other songs to the queue.`;
             interaction.editReply(result);
         }
     }
