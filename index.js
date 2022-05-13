@@ -62,3 +62,5 @@ client.on('guildMemberAdd', async (member) => {
 
 // Login to the bot account.
 client.login(production_mode ? production_token : development_token);
+
+module.exports = client;
