@@ -86,7 +86,7 @@ module.exports = {
                 return;
             }
 
-            let songInfo;
+            let songInfo = [];
 
             const type = await play.validate(query);
             console.log(type);
@@ -94,22 +94,35 @@ module.exports = {
             // If the query is a spotify url.
             if (type == 'sp_track') {                
                 const info = await play.spotify(query)
-                if (info) songInfo = {name: `${info.artists[0].name} - ${info.name}`};
+                if (info) songInfo.push({name: `${info.artists[0].name} - ${info.name}`});
+            
+            } else if (type == 'sp_album') {
+                const album = await play.spotify(query) 
+                const tracks = await album.all_tracks();
+                tracks.forEach(track => {
+                    songInfo.push({name: `${track.name}`});
+                });
+            } else if (type == 'sp_playlist') {
+                const playlist = await play.spotify(query) 
+                const tracks = await playlist.all_tracks();
+                tracks.forEach(track => {
+                    songInfo.push({name: `${track.name}`});
+                });
             } else if (type == 'so_track') { // If the query is a soundcloud url.
                 const info = await play.soundcloud(query);
-                if (info) songInfo = {
+                if (info) songInfo.push({
                     name: info.name,
                     url: info.url,
                     length: info.durationInSec
-                }
+                });
             } else if (type == 'yt_video') { // If the query is a youtube url.
                 try {
                     const info = await play.video_info(query);
-                    if (info) songInfo = {
+                    if (info) songInfo.push({
                         name: info.video_details.title,
                         url: info.video_details.url,
                         length: info.video_details.durationInSec
-                    }
+                    });
                 } catch (error) {
                     if (error.message.includes('Sign in to confirm your age')) {
                         interaction.editReply('Sorry, youtube doesn\'t let me play age restricted videos.');
@@ -118,29 +131,38 @@ module.exports = {
                 }
             } else if (type == 'search') { // Assume it's a search query and not a url.
                 const info = await play.search(query, {limit:1});
-                if (info[0]) songInfo = {
+                if (info[0]) songInfo.push({
                     name: info[0].title,
                     url: info[0].url,
                     length: info[0].durationInSec
-                }
+                });
             } else {
                 interaction.editReply('Sorry, that type of link isn\'t supported yet!');
                 return;
             }
 
-            if (!songInfo) { // If the song variable hasn't been changed.
-                interaction.editReply('There was an error finding your song.');
+            if (!songInfo[0]) { // If the song variable hasn't been changed.
+                interaction.editReply('There was an error finding your song(s).');
                 return;
             }
 
-            const song = new Song(
-                songInfo.name, 
-                interaction.member, 
-                songInfo.url ? songInfo.url : null, 
-                songInfo.length ? songInfo.length : null
-            );
-            
-            const result = await GuildPlayer.play(song);
+            // Loop through all of the the songs and play/queue them.
+            let count = 0;
+            let result = '';
+            songInfo.forEach(songData => {
+                const song = new Song(
+                    songData.name, 
+                    interaction.member, 
+                    songData.url ? songData.url : null, 
+                    songData.length ? songData.length : null
+                );
+                
+                if (count == 0) result = await GuildPlayer.play(song);
+                else await GuildPlayer.play(song);
+                count ++;
+            });
+
+            if (songInfo.length > 1) result = `Added ${songInfo[0].name} and ${songInfo.length - 1} other songs to the queue.`;
             interaction.editReply(result);
         }
     }
