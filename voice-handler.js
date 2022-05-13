@@ -28,6 +28,7 @@ const {
     NoSubscriberBehavior,
     AudioPlayerStatus,
 } = require('@discordjs/voice');
+const client = require('./index');
 
 const musicData = new Discord.Collection();
 
