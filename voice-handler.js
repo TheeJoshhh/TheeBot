@@ -175,13 +175,13 @@ class MusicPlayer {
     }
 
     async pause() {
-        if (!this.player || this.player.state !== AudioPlayerStatus.Playing) return new Error('I\'m not playing anything!');
+        if (!this.player) return new Error('I\'m not playing anything!');
         this.player.pause();
         return;
     }
 
     async resume() {
-        if (!this.player || this.player.state !== AudioPlayerStatus.Paused) return new Error('I\'m not paused!');
+        if (!this.player) return new Error('I\'m not paused!');
         this.player.unpause();
         return;
     }
