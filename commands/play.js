@@ -148,7 +148,7 @@ module.exports = {
 
             const songArr = [];
 
-            songInfo.forEach(async songData => {
+            songInfo.forEach(songData => {
                 const song = new Song(
                     songData.name, 
                     interaction.member, 
@@ -162,8 +162,7 @@ module.exports = {
                 const result = await GuildPlayer.play(songArr);
                 interaction.editReply(result);
             } catch (e) {
-                console.error(e);
-                interaction.editReply('An error occured trying to play your song(s).');
+                interaction.editReply(e.message);
             }
             return;
         }
