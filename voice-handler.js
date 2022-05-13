@@ -173,6 +173,16 @@ class MusicPlayer {
             this.next();
         }
     }
+
+    pause() {
+        if (!this.player || this.player.state !== AudioPlayerStatus.Playing) return new Error('I\'m not playing anything!');
+        this.player.pause();
+    }
+
+    resume() {
+        if (!this.player || this.player.state !== AudioPlayerStatus.Paused) return new Error('I\'m not paused!');
+        this.player.unpause();
+    }
 }
 
 class Song {
