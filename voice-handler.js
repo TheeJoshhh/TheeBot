@@ -124,24 +124,30 @@ class MusicPlayer {
         });
     }
 
-    async play(song) {
+    async play(songs) {
         if (!this.player) this.createPlayer();
 
-        // Add the song to the queue.
-        this.queue.push(song);
+        // Add the song(s) to the queue.
+        songs.forEach(song => {
+            this.queue.push(song);
+        });
 
-        // If the player is idle, play the song, otherwise queue it.
-        if (!this.queue[1]) {
+        // If the player is idle, play the first song, otherwise queue it.
+        if (!this.queue.length <= songs.length) {
             try {
-                const resource = await song.getResource();
+                const resource = await songs[0].getResource();
                 this.player.play(resource);
-                return `Now Playing ${song.name}`;
+                if (songs.length > 1) 
+                return `Now playing \`${songs[0].name}\` and added \`${songs.length - 1}\` other songs to the queue.`;
+                else return `Now playing \`${songs[0].name}\`.`;
             } catch (e) {
                 this.queue.shift();
-                return `There was an error playing ${song.name}`;
+                return new Error(`There was an error playing \`${song.name}\`.`);
             }
         } else {
-            return `${song.name} was added to the queue.`;
+            if (songs.length > 1) 
+            return `Added \`${songs.length}\` songs to the queue.`;
+            else return `Added \`${songs[0].name}\` to the queue.`;
         }
         
     }
