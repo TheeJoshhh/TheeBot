@@ -133,12 +133,12 @@ class MusicPlayer {
         });
 
         // If the player is idle, play the first song, otherwise queue it.
-        if (!this.queue.length <= songs.length) {
+        if (this.queue.length <= songs.length) {
             try {
                 const resource = await songs[0].getResource();
                 this.player.play(resource);
                 if (songs.length > 1) 
-                return `Now playing \`${songs[0].name}\` and added \`${songs.length - 1}\` other songs to the queue.`;
+                return `Now playing \`${songs[0].name}\` and queued \`${songs.length - 1}\` other songs.`;
                 else return `Now playing \`${songs[0].name}\`.`;
             } catch (e) {
                 this.queue.shift();
