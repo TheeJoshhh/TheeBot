@@ -16,6 +16,7 @@
 */
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { musicData } = require('../voice-handler');
 
 module.exports = {
 
