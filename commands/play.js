@@ -149,7 +149,7 @@ module.exports = {
             // Loop through all of the the songs and play/queue them.
             let count = 0;
             let result = '';
-            songInfo.forEach(songData => {
+            songInfo.forEach(async songData => {
                 const song = new Song(
                     songData.name, 
                     interaction.member, 
