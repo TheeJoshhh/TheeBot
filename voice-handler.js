@@ -130,9 +130,7 @@ class MusicPlayer {
         if (!this.player) this.createPlayer();
 
         // Add the song(s) to the queue.
-        songs.forEach(song => {
-            this.queue.push(song);
-        });
+        songs.forEach(song => { this.queue.push(song); });
 
         // If the player is idle, play the first song, otherwise queue it.
         if (this.queue.length <= songs.length) {
@@ -159,9 +157,8 @@ class MusicPlayer {
         if (this.loop) this.queue.push(this.queue[0]);
         // If repeat is off, shift the queue.
         if (!this.repeat) this.queue.shift();
-        
-        // If there are no more songs in queue, return.
-        if (this.queue.length < 1) return;
+        // If there are no more songs in queue, stop the player and return.
+        if (this.queue.length < 1) return this.player?.stop();
         try {
             const resource = await this.queue[0].getResource();
             const channel = client.guilds.cache.get(this.id).channels.cache.get(this.textId);
