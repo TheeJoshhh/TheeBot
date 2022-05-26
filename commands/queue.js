@@ -42,7 +42,7 @@ module.exports = {
             }
 
             // If there's no music queued in the guild.
-            if (GuildPlayer.queue.length < 1) {
+            if (GuildPlayer.queue.length < 1 && GuildPlayer.controller == null) {
                 interaction.reply({
                     content: 'I\'m not playing music!',
                     ephemeral: true
