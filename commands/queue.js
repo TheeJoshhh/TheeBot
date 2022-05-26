@@ -17,7 +17,7 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { musicData } = require('../voice-handler');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton, Guild } = require('discord.js');
 
 module.exports = {
 
@@ -52,20 +52,26 @@ module.exports = {
 
             await interaction.deferReply();
 
-            let queue = GuildPlayer.queue;
-            let guildName = interaction.guild.name;
-            let controls = true;
+            let queue = GuildPlayer.queue.slice(); // Clone of the queue array.
+            let guildName = interaction.guild.name; // The name of the guild / linked guild.
+            let controls = true; // Whether this guild has control over the music.
+            let repeat = GuildPlayer.repeat;
+            let loop = GuildPlayer.loop;
     
             // If the MusicPlayer is linked to another guild.
             if (GuildPlayer.controller) {
                 const OtherGuildPlayer = musicData.get(GuildPlayer.controller);
                 if (OtherGuildPlayer) queue = OtherGuildPlayer.queue; controls = false;
                 guildName = client.guilds.cache.get(GuildPlayer.controller).name;
+                repeat = OtherGuildPlayer.repeat;
+                loop = OtherGuildPlayer.loop;
             }
     
             let count = 0;
             let pageData = [];
             let pages = [];
+            const nowPlaying = queue.shift();
+
             queue.forEach(song => {
                 const page = Math.ceil((count + 1) / 10);
                 if (!pageData[page-1]) pageData.push([]);
@@ -73,10 +79,16 @@ module.exports = {
                 count++;
             });
 
+            // If there are no songs in the queue, add "The queue is empty" to the pageData.
+            if (pageData.length == 0) pageData.push(['The queue is empty.'])
+
             pageData.forEach(data => {
                 const embed = new MessageEmbed()
                 .setTitle(`Music Queue for ${guildName}`)
+                .addField('Now Playing', nowPlaying.name)
                 .addField('Songs in Queue', data.join('\n'))
+                .addField('Repeat', repeat ? 'On' : 'Off', true)
+                .addField('Loop', loop ? 'On' : 'Off', true)
                 pages.push(embed);
             });
             
