@@ -17,7 +17,8 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { musicData } = require('../voice-handler');
-const { MessageEmbed, MessageActionRow, MessageButton, Guild } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { color_theme } = require('../config.json');
 
 module.exports = {
 
@@ -54,14 +55,13 @@ module.exports = {
 
             let queue = GuildPlayer.queue.slice(); // Clone of the queue array.
             let guildName = interaction.guild.name; // The name of the guild / linked guild.
-            let controls = true; // Whether this guild has control over the music.
             let repeat = GuildPlayer.repeat;
             let loop = GuildPlayer.loop;
     
             // If the MusicPlayer is linked to another guild.
             if (GuildPlayer.controller) {
                 const OtherGuildPlayer = musicData.get(GuildPlayer.controller);
-                if (OtherGuildPlayer) queue = OtherGuildPlayer.queue; controls = false;
+                if (OtherGuildPlayer) queue = OtherGuildPlayer.queue;
                 guildName = client.guilds.cache.get(GuildPlayer.controller).name;
                 repeat = OtherGuildPlayer.repeat;
                 loop = OtherGuildPlayer.loop;
@@ -89,6 +89,7 @@ module.exports = {
                 .addField('Songs in Queue', data.join('\n'))
                 .addField('Repeat', repeat ? 'On' : 'Off', true)
                 .addField('Loop', loop ? 'On' : 'Off', true)
+                .setColor(color_theme)
                 pages.push(embed);
             });
             
