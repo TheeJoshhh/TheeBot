@@ -90,7 +90,6 @@ module.exports = {
             let songInfo = [];
 
             const type = await play.validate(query);
-            console.log(type);
             
             // If the query is a spotify url.
             if (type == 'sp_track') {                
@@ -163,6 +162,7 @@ module.exports = {
                 const result = await GuildPlayer.play(songArr);
                 interaction.editReply(result);
             } catch (e) {
+                console.error(e);
                 interaction.editReply(e.message);
             }
             return;
