@@ -117,8 +117,8 @@ module.exports = {
                 // The response that'll be sent to the user.
                 let response = '';
 
-                if (amount > 1) response = `${GuildPlayer.queue[startPos].name} and ${amount-1} other songs have been removed from the queue.`;
-                else response = `${GuildPlayer.queue[startPos].name} was removed from the queue.`;
+                if (amount > 1) response = `\`${GuildPlayer.queue[startPos].name}\` and \`${amount-1}\` other songs have been removed from the queue.`;
+                else response = `\`${GuildPlayer.queue[startPos].name}\` was removed from the queue.`;
                 
                 GuildPlayer.queue.splice(startPos, amount);
 
