@@ -81,6 +81,14 @@ module.exports = {
 
             // Handle the remove subcommand.
             if (_subcommand == 'remove') {
+                if (interaction.member.voice.channel !== interaction.guild.me.voice.channel) {
+                    interaction.reply({
+                        content: `You must be in my voice channel to use that command!`,
+                        ephemeral: true
+                    });
+                    return;
+                }
+
                 const startPos = Math.round(opts[0].value);
                 const endPos = opts[1] ? Math.round(opts[1].value) : startPos;
 
