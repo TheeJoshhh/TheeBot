@@ -17,7 +17,6 @@
 
 // Import required modules.
 const Discord = require('discord.js');
-const mongoose = require('mongoose');
 const { Intents } = Discord;
 const { 
     production_mode, 
@@ -27,6 +26,7 @@ const {
     development_mongo_uri 
 } = require('./config.json');
 const command_handler = require('./command-handler');
+const { connect } = require('./database_handler');
 const Guilds = require('./schemas/guild');
 
 // Create the discord.js client.
@@ -41,9 +41,7 @@ const client = new Discord.Client({
 // Ready Event (Fired when the bot is online and ready).
 client.on('ready', async () => {
     // Connect the database.
-    console.log('Connecting to the Database...');
-    await mongoose.connect(production_mode ? production_mongo_uri : development_mongo_uri);
-    console.log('Database Connected!');
+    await connect();
     
     // Load the command handler.
     command_handler(client);
