@@ -17,7 +17,6 @@
 
 // Import required modules.
 const Discord = require('discord.js');
-const mongoose = require('mongoose');
 const { Intents } = Discord;
 const { 
     production_mode, 
@@ -27,6 +26,7 @@ const {
     development_mongo_uri 
 } = require('./config.json');
 const command_handler = require('./command-handler');
+const { connect, getGuildData } = require('./database-handler');
 const Guilds = require('./schemas/guild');
 
 // Create the discord.js client.
@@ -41,9 +41,7 @@ const client = new Discord.Client({
 // Ready Event (Fired when the bot is online and ready).
 client.on('ready', async () => {
     // Connect the database.
-    console.log('Connecting to the Database...');
-    await mongoose.connect(production_mode ? production_mongo_uri : development_mongo_uri);
-    console.log('Database Connected!');
+    connect();
     
     // Load the command handler.
     command_handler(client);
@@ -53,8 +51,8 @@ client.on('ready', async () => {
 // GuildMemberAdd Event (Fired when a new member joins a guild).
 client.on('guildMemberAdd', async (member) => {
     const { guild } = member;
-    const guild_data = await Guilds.findById(guild.id);
-    if (!guild_data) return;
+    const guild_data = getGuildData(guild.id);
+    if (!guild_data || guild_data == {}) return;
     const welcome_channel = guild.channels.cache.get(guild_data.welcome_message.channel_id);
     if (!welcome_channel) return;
     welcome_channel.send(guild_data.welcome_message.message.replace('${member}', member));
