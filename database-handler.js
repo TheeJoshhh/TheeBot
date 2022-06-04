@@ -21,13 +21,13 @@ const mongoose = require('mongoose');
 const Guilds = require('./schemas/guild');
 const { production_mode, production_mongo_uri, development_mongo_uri } = require('./config.json');
 
-// Exports.
-module.exports.connect = connect();
-module.exports.getGuildData = getGuildData();
-module.exports.refreshCache = refreshCache();
-
 // Discord collections to hold cached data from the database.
 const guildCache = new Discord.Collection();
+
+// Exports.
+module.exports.connect = connect;
+module.exports.getGuildData = getGuildData;
+module.exports.refreshCache = refreshCache;
 
 // Function to connect to the database.
 async function connect() {
@@ -49,7 +49,7 @@ async function getGuildData(guildId) {
 // Function to refresh the guild data cache for a specific guild.
 async function refreshCache(guildId) {
     // Get the guild data from the database.
-    const guildData = await Guilds.find({ _id: guildId });
+    const guildData = await Guilds.findById({ _id: guildId });
     // Update the cache.
     guildCache.set(guildId, guildData ? guildData : {});
     // Return the updated cache result.
