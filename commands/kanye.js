@@ -43,7 +43,7 @@ module.exports = {
             const quote = await getQuote();
 
             // Send the kanye west quote.
-            interaction.reply(quote);
+            interaction.reply(`"${quote}" - Kanye`);
         }
     }
 }
