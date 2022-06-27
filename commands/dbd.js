@@ -78,8 +78,6 @@ module.exports = {
 
             const embed = new MessageEmbed()
                 .setColor(color_theme);
-
-            console.log(result);
             
             if (type === 'survivors') {
                 embed
@@ -105,6 +103,7 @@ module.exports = {
                 .addField('Realm', result.realm, true)
                 .addField('Power', result.power, true)
                 .addField('Speed', result.speed, true)
+                .addField('Height', result.height, true)
                 .addField('Terror Radius Size', result.terror_radius, true)
                 .addField('DLC', result.dlc, true)
                 .addField('Free', result.is_free ? 'Yes' : 'No', true)
