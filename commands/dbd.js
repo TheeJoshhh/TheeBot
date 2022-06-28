@@ -97,7 +97,7 @@ module.exports = {
                 .setTitle(`${result.name}`)
                 .setThumbnail(result.icon.portrait)
                 .addField('Full Name', result.full_name ? result.full_name : result.name, true)
-                .addField('Alias Name(s)', result.alias, true)
+                .addField('Alias Name(s)', result.alias ? result.alias : 'None', true)
                 .addField('Gender', result.gender, true)
                 .addField('Nationality', result.nationality, true)
                 .addField('Realm', result.realm, true)
